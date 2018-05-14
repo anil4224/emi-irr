@@ -1,6 +1,6 @@
 {
   "name": "emi-irr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "For calculate FLAT EMI, EFFECTIVE EMI, Monthly IRR and Annual IRR",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,11 @@
   },
   "keywords": [
     "EMI",
-    "IRR"
+    "IRR",
+    "Flat EMI",
+    "Effective EMI",
+    "Monthly IRR",
+    "Yearly IRR"
   ],
   "author": "anil4224 <kanil4224@gmail.com>",
   "license": "ISC",
@@ -23,5 +27,9 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.1.1"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {}
 }

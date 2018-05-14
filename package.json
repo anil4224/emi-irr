@@ -1,6 +1,6 @@
 {
   "name": "emi-irr",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "For calculate FLAT EMI, EFFECTIVE EMI, Monthly IRR and Annual IRR",
   "main": "index.js",
   "scripts": {

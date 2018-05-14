@@ -26,13 +26,13 @@ describe('#EMICalculation and IRR calculation', function () {
     it('Calc IRR With Flat rate of Interest for month', function () {
         var finance = new app();
         var res = finance.IRRCalcMonthly(98000, 24, 11.22, 'FLAT', 0);
-        (res).should.be.within(1, 2); //1.9
+        (res).should.be.within(1, 2); //1.69
     });
 
     it('Calc IRR With EFFECTIVE rate of Interest for Annum', function () {
         var finance = new app();
         var res = finance.IRRCalcYearly(98000, 24, 11.22, 'EFFECTIVE', 0);
-        (res).should.be.within(11, 83); //22.25
+        (res).should.be.within(11, 83); //11.83
     });
 
     it('Calc IRR With EFFECTIVE rate of Interest for Month', function () {

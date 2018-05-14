@@ -1,20 +1,22 @@
 'use strict';
 
-/**
- * Adds commas to a number
- * @param {number} number
- * @param {string} locale
- * @return {string}
- */
 var FinanceCalc = function () {};
 
-FinanceCalc.prototype.FLATEMICalc = function (principal, tenure, rateOfInterest) {
+/**
+ * Adds commas to a number
+ * @param {number} principal
+ * @param {number} tenure
+ * @param {number} interest
+ * @return {number} 
+ */
+
+FinanceCalc.prototype.FLATEMICalc = function (principal, tenure, interest) {
     var emiAmount = 0;
-    rateOfInterest = Number(rateOfInterest);
+    interest = Number(interest);
     principal = Number(principal);
     tenure = Number(tenure);
-    if (rateOfInterest > 0) {
-        var interest = (principal * (tenure / 12) * rateOfInterest) / 100;
+    if (interest > 0) {
+        var interest = (principal * (tenure / 12) * interest) / 100;
         emiAmount = (principal + interest) / tenure;
     } else {
         emiAmount = principal / tenure;
@@ -22,43 +24,45 @@ FinanceCalc.prototype.FLATEMICalc = function (principal, tenure, rateOfInterest)
     return Math.round(Math.ceil(emiAmount));
 };
 
+/**
+ * Adds commas to a number
+ * @param {number} principal
+ * @param {number} tenure
+ * @param {number} interest
+ * @return {number} 
+ */
 //Reference from: EMI = [P x R x (1+R)^N]/[(1+R)^N-1]	
-FinanceCalc.prototype.EffectiveEMICalc = function (loanAmount, tenure, interestRate) {
+FinanceCalc.prototype.EffectiveEMICalc = function (principal, tenure, interest) {
     var emiAmount;
-    interestRate = Number(interestRate);
-    loanAmount = Number(loanAmount);
+    interest = Number(interest);
+    principal = Number(principal);
     tenure = Number(tenure);
-    if (interestRate > 0) {
-        var intrPerMonth = interestRate / 1200;
-        emiAmount = loanAmount * intrPerMonth / (1 - (Math.pow(1 / (1 + intrPerMonth), tenure)));
+    if (interest > 0) {
+        var intrPerMonth = interest / 1200;
+        emiAmount = principal * intrPerMonth / (1 - (Math.pow(1 / (1 + intrPerMonth), tenure)));
     } else {
-        emiAmount = loanAmount / tenure;
+        emiAmount = principal / tenure;
     }
     return Math.ceil((emiAmount * 100) / 100);
 }
 
-/* FinanceCalc.prototype.IRRCalcMonthly = function (loanAmount, tenure, interestRate) {
-    var emiAmount;
-    interestRate = Number(interestRate);
-    loanAmount = Number(loanAmount);
-    tenure = Number(tenure);
-    if (interestRate > 0) {
-        var intrPerMonth = interestRate / 1200;
-        emiAmount = loanAmount * intrPerMonth / (1 - (Math.pow(1 / (1 + intrPerMonth), tenure)));
-    } else {
-        emiAmount = loanAmount / tenure;
-    }
-    return Math.ceil((emiAmount * 100) / 100);
-} */
-
-FinanceCalc.prototype.IRRCalcYearly = function (loanAmount, loanTenure, rateOfInterest, rateType, advEMI) {
-    var loanAmount = Number(loanAmount) || 0;
-    var loanTenure = Number(loanTenure) || 0;
-    var rateOfInterest = Number(rateOfInterest) || 0;
-    var advEMI = Number(advEMI) || 0;
+/**
+ * Adds commas to a number
+ * @param {number} principal
+ * @param {number} tenure
+ * @param {number} interest
+ * @param {string} rateType
+ * @param {number} advEMIs
+ * @return {number} 
+ */
+FinanceCalc.prototype.IRRCalcYearly = function (principal, tenure, interest, rateType, advEMIs) {
+    var principal = Number(principal) || 0;
+    var tenure = Number(tenure) || 0;
+    var interest = Number(interest) || 0;
+    var advEMIs = Number(advEMIs) || 0;
     var emi = 0;
-    if (loanAmount > 0 && rateOfInterest > 0 && loanTenure > 0) {
-        var monthlyIRR = IRRMainCalc(loanAmount, loanTenure, rateOfInterest, rateType, advEMI);
+    if (principal > 0 && interest > 0 && tenure > 0) {
+        var monthlyIRR = IRRMainCalc(principal, tenure, interest, rateType, advEMIs);
 
         if (monthlyIRR) {
             var yearlyIRRPer = Math.pow((1 + (monthlyIRR / 100)), 12) - 1;
@@ -71,13 +75,22 @@ FinanceCalc.prototype.IRRCalcYearly = function (loanAmount, loanTenure, rateOfIn
     }
 }
 
-FinanceCalc.prototype.IRRCalcMonthly = function (loanAmount, loanTenure, rateOfInterest, rateType, advEMI) {
-    var loanAmount = Number(loanAmount) || 0;
-    var loanTenure = Number(loanTenure) || 0;
-    var rateOfInterest = Number(rateOfInterest) || 0;
-    var advEMI = Number(advEMI) || 0;
-    if (loanAmount > 0 && rateOfInterest > 0 && loanTenure > 0) {
-        var monthlyIRR = IRRMainCalc(loanAmount, loanTenure, rateOfInterest, rateType, advEMI);
+/**
+ * Adds commas to a number
+ * @param {number} principal
+ * @param {number} tenure
+ * @param {number} interest
+ * @param {string} rateType
+ * @param {number} advEMIs
+ * @return {number} 
+ */
+FinanceCalc.prototype.IRRCalcMonthly = function (principal, tenure, interest, rateType, advEMIs) {
+    var principal = Number(principal) || 0;
+    var tenure = Number(tenure) || 0;
+    var interest = Number(interest) || 0;
+    var advEMIs = Number(advEMIs) || 0;
+    if (principal > 0 && interest > 0 && tenure > 0) {
+        var monthlyIRR = IRRMainCalc(principal, tenure, interest, rateType, advEMIs);
         if (monthlyIRR) {
             monthlyIRR = parseFloat(monthlyIRR.toFixed(2));
             return monthlyIRR;
@@ -87,26 +100,36 @@ FinanceCalc.prototype.IRRCalcMonthly = function (loanAmount, loanTenure, rateOfI
     }
 }
 
-function IRRMainCalc(loanAmount, loanTenure, rateOfInterest, rateType, advEMI) {
+/**
+ * Adds commas to a number
+ * @param {number} principal
+ * @param {number} tenure
+ * @param {number} interest
+ * @param {string} rateType
+ * @param {number} advEMIs
+ * @return {number} 
+ */
+
+function IRRMainCalc(principal, tenure, interest, rateType, advEMIs) {
     try {
         var emi = 0;
         if (rateType == 'FLAT') {
-            emi = FinanceCalc.prototype.FLATEMICalc(loanAmount, loanTenure, rateOfInterest);
+            emi = FinanceCalc.prototype.FLATEMICalc(principal, tenure, interest);
         } else {
-            emi = FinanceCalc.prototype.EffectiveEMICalc(loanAmount, loanTenure, rateOfInterest);
+            emi = FinanceCalc.prototype.EffectiveEMICalc(principal, tenure, interest);
         }
         var emiArray = [];
         var loanAmtWithAdvEMIs;
-        if (advEMI > 0) {
-            loanAmtWithAdvEMIs = -Math.abs(loanAmount) + (emi * advEMI);
+        if (advEMIs > 0) {
+            loanAmtWithAdvEMIs = -Math.abs(principal) + (emi * advEMIs);
         } else {
-            loanAmtWithAdvEMIs = -Math.abs(loanAmount);
+            loanAmtWithAdvEMIs = -Math.abs(principal);
         }
         emiArray.splice(0, 0, loanAmtWithAdvEMIs);
-        if (loanTenure <= advEMI) {
+        if (tenure <= advEMIs) {
             return null;
         }
-        var loanEMICount = loanTenure - advEMI;
+        var loanEMICount = tenure - advEMIs;
         while (loanEMICount > 0) {
             emiArray.push(emi);
             loanEMICount--;
@@ -122,23 +145,35 @@ function IRRMainCalc(loanAmount, loanTenure, rateOfInterest, rateType, advEMI) {
     }
 }
 
+/**
+ * Adds commas to a number
+ * @param {number} money
+ * @param {number} interest
+ * @param {number} n
+ * @return {number} 
+ */
 function PVCalc(money, interest, n) {
     return money / (Math.pow(1 + interest, n));
 }
 
+/**
+ * Adds commas to a number
+ * @param {Array<number>} CArray
+ * @return {number} 
+ */
 function IRRCalc(CArray) {
-    let min = -1.0;
-    let max = 1.0;
-    let guess = (min + max) / 2;
-    let lastGuess = 1.0
-    let notSame = true
-    let NPV = 0;
+    var min = -1.0;
+    var max = 1.0;
+    var guess = (min + max) / 2;
+    var lastGuess = 1.0
+    var notSame = true
+    var NPV = 0;
     do {
         NPV = 0;
         guess = (min + max) / 2;
         if (Math.abs(lastGuess - guess) < 0.0000000000000000001) notSame = false
         lastGuess = guess
-        for (let j = 0; j < CArray.length; j++) {
+        for (var j = 0; j < CArray.length; j++) {
             NPV += PVCalc(CArray[j], guess, j);
         }
         if (NPV > 0) {
@@ -147,11 +182,9 @@ function IRRCalc(CArray) {
             max = guess;
         }
     } while (notSame && (Math.abs(NPV) > 0.0000000000000000001));
-    let raw = Number(guess * 100);
+    var raw = Number(guess * 100);
     return parseFloat(raw);
 }
-
-
 
 if (typeof exports !== 'undefined' && module.exports) {
     module.exports = FinanceCalc;

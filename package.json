@@ -1,0 +1,27 @@
+{
+  "name": "emi-irr",
+  "version": "0.1.0",
+  "description": "For calculate FLAT EMI, EFFECTIVE EMI, Monthly IRR and Annual IRR",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anil4224/emi-irr.git"
+  },
+  "keywords": [
+    "EMI",
+    "IRR"
+  ],
+  "author": "anil4224 <kanil4224@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anil4224/emi-irr/issues"
+  },
+  "homepage": "https://github.com/anil4224/emi-irr#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1"
+  }
+}

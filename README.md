@@ -5,7 +5,7 @@ Flat or Effective EMI Calculation, Monthly or Annually Internal rate of return (
 ## Installation
 
 ```
-npm install irr-emi --save
+npm install emi-irr --save
 ```
 
 ## Usage
